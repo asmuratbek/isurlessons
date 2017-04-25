@@ -1,0 +1,11 @@
+/static
+.idea
+db.sqlite3
+parameters.py
+*.pyc
+
+git init
+git remote add origin https://bitbucket.org/asmuratbek/isur1
+git add .
+git commit -m 'first commit'
+git push origin master
