@@ -21,10 +21,14 @@ from isur2 import settings
 from social.views import *
 
 urlpatterns = [
+    url(r'^jet/', include('jet.urls', 'jet')),
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name='index'),
-    url(r'^news/get/(?P<id>[0-9]+)$', get_news, name='get_news'),
-    url(r'^blog/get/(?P<id>[0-9]+)$', get_blog, name='get_blog'),
+    url(r'^news/$', NewsListView.as_view(), name='news'),
+    url(r'^blog/$', BlogListView.as_view(), name='blog'),
+    url(r'^news/get/(?P<pk>[0-9]+)$', GetNewsView.as_view(), name='get_news'),
+    url(r'^blog/get/(?P<pk>[0-9]+)$', GetBlogView.as_view(), name='get_blog'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

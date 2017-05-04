@@ -10,16 +10,15 @@
             {{ news.text|safe }}{{ blog.text|safe }}
         </div>
         <div class="col-md-2">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    Panel contenteargjnelgn
-                </div>
-                argklnealgnealrgnelng
-                <div class="panel-footer">Panel footer</div>
-            </div>
         </div>
 
     </div>
 
+    <div class="alert alert-success" role="alert">
+        <h2>{{ comments.author }}</h2>
+        <i>{{ comments.date }}</i><br>
+        <i>{{ comments.text }}</i>
+        <div class="alert-link"></div>
+    </div>
 
 {% endblock %}

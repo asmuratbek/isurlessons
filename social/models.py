@@ -16,3 +16,4 @@ class SocialLinks(models.Model):
     t_link = models.CharField(max_length=225, verbose_name='Ссылка на твиттер', null=True, blank=True)
     i_link = models.CharField(max_length=225, verbose_name='Ссылка на инстаграмм', null=True, blank=True)
     y_link = models.CharField(max_length=225, verbose_name='Ссылка на ютуб', null=True, blank=True)
+

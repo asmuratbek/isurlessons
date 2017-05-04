@@ -32,12 +32,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'comments',
     'social',
     'news',
     'blog',
@@ -132,7 +135,7 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(os.path.dirname(_PATH), 'static', 'static_root')
 
 STATICFILES_DIRS = (
-    os.path.join(os.path.dirname(BASE_DIR), 'isur2', 'templates', 'public'),
+    os.path.join(os.path.dirname(BASE_DIR), 'isurlessons', 'templates', 'public'),
 )
 
 CKEDITOR_JQUERY_URL = '//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js'
@@ -145,3 +148,26 @@ CKEDITOR_CONFIGS = {
         'language': 'ru',
     },
 }
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "isurlessons.settings")
+JET_DEFAULT_THEME = 'default'
+JET_SIDE_MENU_COMPACT = True
+JET_SIDE_MENU_CUSTOM_APPS = [
+    ('auth', [
+        'Group',
+        'User',
+    ]),
+    ('blog', [
+        'Author',
+        'Blog',
+    ]),
+    ('news', [
+        'News',
+    ]),
+    ('social', [
+        'SocialLinks',
+    ]),
+    ('comments',[
+        'CommentsBlog',
+        'CommentsNews',
+    ])
+]
