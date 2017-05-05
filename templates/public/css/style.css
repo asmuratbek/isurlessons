@@ -1,0 +1,24 @@
+.comments {
+    margin-top: 50px;
+}
+
+.email {
+    font-weight: 900;
+    font-size: 14px;
+    color: #0a68a3;
+    text-transform: capitalize;
+}
+
+.date {
+    color: #c0c0c0;
+}
+
+.comments p {
+    font-size: 16px;
+}
+
+.form-control {
+    margin-bottom:15px;
+}
+
+.

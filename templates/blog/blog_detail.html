@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <h1>{{ news.title }}{{ blog.title }}</h1><br>
+        <i>{{ news.date }}{{ blog.date }}</i><br>
+        <i>{{ blog.author }}</i><br>
+        <img src="{{ news.image.url }}{{ blog.image.url }}"><br>
+        {{ news.text|safe }}{{ blog.text|safe }}
+        <div class="comments">
+            {% for comment in comments %}
+                <i class="email">{{ comment.email }}</i></br>
+                <i class="date">{{ comment.date }}</i>
+            <p>{{ comment.text|safe }}</p>
+            {% endfor %}
+        </div>
+
+        <form method="POST" action="" id="comment_form">
+        {% csrf_token %}
+{#            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com"  name="email">#}
+{#            <input type="hidden" name="blog">#}
+{#            <textarea class="form-control" rows="3" name=""></textarea>#}
+            {{ form }}
+{#            {% render_field form.email type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com"%}#}
+{#            {% render_field form.text type="text" class="form-control" id="exampleInputText" placeholder="Введите комментарий"%}#}
+{#            {% render_field form.blog type='hidden' name="blog" value=blog.id %}#}
+        <input type="submit" class="btn btn-default" value="Добавить коммент">
+        </form>
+
+    </div>
+    <div class="col-md-2"></div>
+
+</div>
+{% endblock %}

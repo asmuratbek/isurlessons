@@ -1,0 +1,35 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <meta charset="UTF-8">
+    <title>Social</title>
+</head>
+<body>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+
+<ul class="nav nav-pills">
+  <li role="presentation" class="active"><a href="/">Главная</a></li>
+  <li role="presentation"><a href="{% url 'news' %}">Новости</a></li>
+  <li role="presentation"><a href="{% url 'blog' %}">Статьи</a></li>
+</ul>
+
+{% block content %}
+
+{% endblock %}
+
+{#<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>#}
+
+</body>
+</html>

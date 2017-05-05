@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +43,8 @@ INSTALLED_APPS = [
     'social',
     'news',
     'blog',
+    'comments',
+    'widget_tweaks',
     'ckeditor',
     'ckeditor_uploader',
 ]
@@ -145,3 +149,7 @@ CKEDITOR_CONFIGS = {
         'language': 'ru',
     },
 }
+
+JET_DEFAULT_THEME = 'green'
+JET_SIDE_MENU_COMPACT = True
+

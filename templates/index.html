@@ -1,20 +1,11 @@
-{% load staticfiles %}
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html lang="en">
-<head>
-     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-    <meta charset="UTF-8">
-    <title>Social</title>
-</head>
-<body>
-
-
+{% block content %}
 <div class="row">
     <div class="col-md-6">
-    <span style="font-size: 50px; color: #2aabd2">Новости</span>
+{#        <span style="font-size: 50px; color: #2aabd2"><a href="{% url 'news' %}">Новости</a></span>#}
         {% for i in news %}
-            <h1><a href="{% url 'get_news' id=i.id %}">{{ i.title }}</a></h1>
+            <h1><a href="{% url 'get_news' pk=i.id %}">{{ i.title }}</a></h1>
             <i>{{ i.date }}</i><br>
             <img src="{{ i.image.url }}" style="height: 200px; width: 200px;">
             <p>{{ i.preview }}</p>
@@ -22,9 +13,9 @@
         {% endfor %}
     </div>
     <div class="col-md-6">
-    <span style="font-size: 50px; color:#2aabd2 ">Статьи</span>
+    <span style="font-size: 50px; color:#2aabd2 "><a href="{% url 'blog' %}">Статьи</a></span>
         {% for i in blog %}
-            <h1><a href="{% url 'get_blog' id=i.id %}" >{{ i.title }}</a></h1>
+            <h1><a href="{% url 'get_blog' pk=i.id %}" >{{ i.title }}</a></h1>
             <i>{{ i.author }}</i><br>
             <i>{{ i.date }}</i><br>
             <img src="{{ i.image.url }}" style="height: 200px; width: 200px;">
@@ -33,7 +24,5 @@
         {% endfor %}
     </div>
 </div>
-<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 
-</body>
-</html>
+{% endblock %}
