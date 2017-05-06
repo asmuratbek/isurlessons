@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <span style="font-size: 50px; color: #2aabd2">Статьи</span>
+            {% for blog in object_list %}
+                <h1><a href="{% url 'get_blog' pk=blog.id %}">{{ blog.title }}</a></h1>
+                <i>{{ blog.author }}</i><br>
+                <i>{{ blog.date }}</i><br>
+                <img src="{{ blog.image.url }}" style="height: 200px; width: 200px;">
+                <p>{{ blog.preview }}</p>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
