@@ -9,6 +9,18 @@
         <i>{{ blog.author }}</i><br>
         <img src="{{ news.image.url }}{{ blog.image.url }}"><br>
         {{ news.text|safe }}{{ blog.text|safe }}
+        <div class="comments">
+            {% for comment in comments %}
+                <i class="email">{{ comment.email }}</i></br>
+                <i class="date">{{ comment.date }}</i>
+            <p>{{ comment.text|safe }}</p>
+            {% endfor %}
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Сохранить" />
+        </form>
     </div>
     <div class="col-md-2"></div>
 

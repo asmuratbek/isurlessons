@@ -6,7 +6,7 @@
 <div class="col-md-6">
     <span style="font-size: 50px; color:#2aabd2 ">Новости</span>
         {% for news in object_list %}
-            <h1><a href="{% url 'get_news' pk=news.id %}" >{{ news.title }}</a></h1>
+            <h1><a href="{% url 'get_news' id=news.id %}" >{{ news.title }}</a></h1>
             <i>{{ news.author }}</i><br>
             <i>{{ news.date }}</i><br>
             <img src="{{ news.image.url }}" style="height: 200px; width: 200px;">

@@ -28,7 +28,8 @@ urlpatterns = [
     url(r'^$', index, name='index'),
     url(r'^blog/$', BlogListView.as_view(), name='blog'),
     url(r'^news/$', NewsListView.as_view(), name='news'),
-    url(r'^news/get/(?P<pk>[0-9]+)$', NewsDetailView.as_view(), name='get_news'),
+    # url(r'^news/get/(?P<pk>[0-9]+)$', NewsDetailView.as_view(), name='get_news'),
+    url(r'^news/(?P<id>[0-9]+)$', add_news_comment, name='get_news'),
     url(r'^blog/get/(?P<pk>[0-9]+)$', BlogDetailView.as_view(), name='get_blog'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]

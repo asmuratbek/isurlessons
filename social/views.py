@@ -9,7 +9,7 @@ from django.views.generic import DetailView
 from django.views.generic import ListView
 
 from blog.models import Blog
-from comments.forms import CommentBlogForm
+from comments.forms import CommentBlogForm, CommentNewsForm
 from comments.models import CommentsBlog, CommentsNews
 from news.models import *
 from .models import *
@@ -60,7 +60,7 @@ class BlogDetailView(DetailView):
                 comment.blog = self.get_object()
                 comment.text = form.cleaned_data['text']
                 comment.save()
-                messages.success(request, 'Your profile was updated.')
+                messages.success(request, 'Your comment was edded.')
 
                 return HttpResponseRedirect('/blog/get/%s' % self.get_object().id )
 
@@ -71,12 +71,34 @@ class NewsListView(BlogListView):
     model = News
 
 
-class NewsDetailView(DetailView):
-    model = News
+# class NewsDetailView(DetailView):
+#     model = News
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(NewsDetailView, self).get_context_data(**kwargs)
+#         context['comments'] = CommentsNews.objects.all()
+#
+#         return context
 
-    def get_context_data(self, **kwargs):
-        context = super(NewsDetailView, self).get_context_data(**kwargs)
-        context['comments'] = CommentsNews.objects.all()
 
-        return context
+def add_news_comment(request, id):
+    news = News.objects.get(id=id)
+    comments = CommentsNews.objects.all()
+    form = CommentNewsForm(request.POST or None)
+    if request.method == 'POST':
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.news_id = news.id
+            comment.save()
 
+    params = {
+        'form': form,
+        'news': news,
+        'comments': comments,
+    }
+
+    return render(request, 'news/news_detail.html', params)
+
+
+class CommentCreateView(CreateView):
+    pass

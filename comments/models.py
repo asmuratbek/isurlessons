@@ -30,7 +30,7 @@ class CommentsNews(models.Model):
         verbose_name = 'Комментарий новости'
         verbose_name_plural = 'Коментарии новостей'
 
-    blog = models.ForeignKey(News, on_delete=models.CASCADE, verbose_name='Новость')
+    news = models.ForeignKey(News, on_delete=models.CASCADE, verbose_name='Новость')
     date = models.DateTimeField(auto_now_add=True, null=True)
     email = models.CharField(max_length=255, verbose_name='Email')
     text = models.TextField(verbose_name='Text')
