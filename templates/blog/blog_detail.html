@@ -11,27 +11,21 @@
         <img src="{{ news.image.url }}{{ blog.image.url }}"><br>
         {{ news.text|safe }}{{ blog.text|safe }}
         <div class="comments">
-            {% for comment in comments %}
-                <i class="email">{{ comment.email }}</i></br>
-                <i class="date">{{ comment.date }}</i>
-            <p>{{ comment.text|safe }}</p>
-            {% endfor %}
+            {% include 'partial/_comments.html' %}
         </div>
 
-        <form method="POST" action="" id="comment_form">
+        <form method="POST" action="{% url 'comments_add' %}" id="comment_form">
         {% csrf_token %}
-{#            <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com"  name="email">#}
-{#            <input type="hidden" name="blog">#}
-{#            <textarea class="form-control" rows="3" name=""></textarea>#}
-            {{ form }}
-{#            {% render_field form.email type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com"%}#}
-{#            {% render_field form.text type="text" class="form-control" id="exampleInputText" placeholder="Введите комментарий"%}#}
-{#            {% render_field form.blog type='hidden' name="blog" value=blog.id %}#}
+            {% render_field form.email type='email' id='id_email' %}
+            {% render_field form.text type="text" id='id_text' %}
+            {% render_field form.blog type='hidden' value=blog.id %}
         <input type="submit" class="btn btn-default" value="Добавить коммент">
         </form>
 
     </div>
     <div class="col-md-2"></div>
+
+
 
 </div>
 {% endblock %}

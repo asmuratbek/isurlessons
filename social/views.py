@@ -3,7 +3,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
@@ -41,30 +42,52 @@ class BlogListView(ListView):
         return context
 
 
-class BlogDetailView(DetailView):
-    model = Blog
-    template_name = 'blog/blog_detail.html'
+# class BlogDetailView(DetailView):
+#     model = Blog
+#     template_name = 'blog/blog_detail.html'
+#
+#     def get_context_data(self, **kwargs):
+#         context = super(BlogDetailView, self).get_context_data(**kwargs)
+#         context['comments'] = CommentsBlog.objects.all()
+#         context['form'] = CommentBlogForm()
+#         return context
 
-    def get_context_data(self, **kwargs):
-        context = super(BlogDetailView, self).get_context_data(**kwargs)
-        context['comments'] = CommentsBlog.objects.all()
-        context['form'] = CommentBlogForm
-        return context
 
-    def post(self, request, *args, **kwargs):
-        if request.POST:
-            form = CommentBlogForm(request.POST)
-            if form.is_valid():
-                comment = CommentsBlog()
-                comment.email = form.cleaned_data['email']
-                comment.blog = self.get_object()
-                comment.text = form.cleaned_data['text']
-                comment.save()
-                messages.success(request, 'Your comment was edded.')
+def get_blog(request, id):
+    blog = Blog.objects.get(id=id)
+    comments = CommentsBlog.objects.filter(blog_id=blog)
+    form = CommentBlogForm(request.POST)
 
-                return HttpResponseRedirect('/blog/get/%s' % self.get_object().id )
+    params = {
+        'blog':blog,
+        'comments':comments,
+        'form':form,
+    }
 
-        return JsonResponse(dict(success=True))
+    return render(request, 'blog/blog_detail.html', params)
+
+def comments_add(request):
+    if request.is_ajax():
+        form = CommentBlogForm(request.POST)
+        if form.is_valid():
+            comment = CommentsBlog()
+            comment.email = form.cleaned_data['email']
+            comment.blog_id = form.cleaned_data['blog']
+            comment.text = form.cleaned_data['text']
+            comment.save()
+
+            return JsonResponse(dict(success=True))
+
+    return JsonResponse(dict(success=True, message='Request is not AJAX!'))
+
+@csrf_exempt
+def comments_all(request):
+    comments = CommentsBlog.objects.filter(blog_id=request.POST.get('blog'))
+
+    params = {
+        'comments': comments
+    }
+    return render_to_response('partial/_comments.html', params)
 
 
 class NewsListView(BlogListView):

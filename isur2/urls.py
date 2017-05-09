@@ -30,7 +30,9 @@ urlpatterns = [
     url(r'^news/$', NewsListView.as_view(), name='news'),
     # url(r'^news/get/(?P<pk>[0-9]+)$', NewsDetailView.as_view(), name='get_news'),
     url(r'^news/(?P<id>[0-9]+)$', add_news_comment, name='get_news'),
-    url(r'^blog/get/(?P<pk>[0-9]+)$', BlogDetailView.as_view(), name='get_blog'),
+    url(r'^blog/get/(?P<id>[0-9]+)$', get_blog, name='get_blog'),
+    url(r'^comments/add$', comments_add, name='comments_add'),
+    url(r'^comments/$', comments_all, name='comments_all'),
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]
 

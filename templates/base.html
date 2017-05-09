@@ -28,8 +28,39 @@
 {% block content %}
 
 {% endblock %}
+<script type="text/javascript" src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
 
-{#<script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>#}
-
+<script>
+        var form = $('#comment_form');
+        $(form).on('submit', function (event) {
+            event.preventDefault();
+            console.log('Send data function is called!');
+            $.ajax({
+                method: 'POST',
+                url: $(form).attr('action'),
+                dataType: 'JSON',
+                data: $(form).serialize(),
+                success: function (response) {
+                    if(response.success) {
+                        $.ajax({
+                            method: 'POST',
+                            dataType: 'HTML',
+                            url: '{% url 'comments_all' %}',
+                            data: {'csrf_token': '{{ csrf_token }}', 'blog': {{ blog.id }}},
+                            success: function (response) {
+                                $('.comments').html(response);
+                                $('#id_email').val('');
+                                $('#id_text').val('');
+                            },
+                            error: function () {
+                                console.error('Can\'t send ajax to load all comments');
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>

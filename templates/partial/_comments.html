@@ -1,0 +1,5 @@
+{% for comment in comments %}
+    <i class="email">{{ comment.email }}</i></br>
+    <i class="date">{{ comment.date }}</i>
+    <p>{{ comment.text|safe }}</p>
+{% endfor %}
