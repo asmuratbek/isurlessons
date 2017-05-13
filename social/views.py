@@ -158,7 +158,7 @@ class BlogUpdateView(UpdateView):
     form_class = CreateBlog
     model = Blog
     template_name = 'blog/blog_create.html'
-
+    #
     def get_success_url(self):
         return reverse('create_blog:blog')
 
