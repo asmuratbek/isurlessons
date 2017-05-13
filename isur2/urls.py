@@ -18,6 +18,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 
 import comments
+import news.urls
 from isur2 import settings
 from social.views import *
 
@@ -27,7 +28,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', index, name='index'),
     url(r'^blog/$', BlogListView.as_view(), name='blog'),
+    url(r'^thanks/news/', include('news.urls', namespace='create_news')),
+    url(r'^thanks/blog/', include('blog.urls', namespace='create_blog')),
     url(r'^news/$', NewsListView.as_view(), name='news'),
+    url(r'^news/create/', NewsCreateView.as_view(), name='news_create'),
+    url(r'^blog/create/', BlogCreateView.as_view(), name='blog_create'),
+    url(r'^blog/(?P<pk>[0-9]+)/update/$', BlogUpdateView.as_view(), name='blog_update'),
     # url(r'^news/get/(?P<pk>[0-9]+)$', NewsDetailView.as_view(), name='get_news'),
     url(r'^news/(?P<id>[0-9]+)$', add_news_comment, name='get_news'),
     url(r'^blog/get/(?P<id>[0-9]+)$', get_blog, name='get_blog'),

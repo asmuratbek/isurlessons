@@ -4,14 +4,17 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, render_to_response
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView
 from django.views.generic import DetailView
 from django.views.generic import ListView
 
+from blog.forms import CreateBlog
 from blog.models import Blog
 from comments.forms import CommentBlogForm, CommentNewsForm
 from comments.models import CommentsBlog, CommentsNews
+from news.forms import CreateNews
 from news.models import *
 from .models import *
 
@@ -122,6 +125,56 @@ def add_news_comment(request, id):
 
     return render(request, 'news/news_detail.html', params)
 
+def success_news(request):
+    return render(request, 'news/success.html')
 
-class CommentCreateView(CreateView):
-    pass
+def success_blog(request):
+    return render(request, 'blog/success.html')
+
+class NewsCreateView(CreateView):
+    form_class = CreateNews
+    template_name = 'news/news_create.html'
+
+    def get_success_url(self):
+        return reverse('create_news:news')
+
+    def form_valid(self, form):
+        form.save()
+        return super(NewsCreateView, self).form_valid(form)
+
+class BlogCreateView(CreateView):
+    form_class = CreateBlog
+    template_name = 'blog/blog_create.html'
+
+    def get_success_url(self):
+        return reverse('create_blog:blog')
+
+    def form_valid(self, form):
+        form.save()
+        return super(BlogCreateView, self).form_valid(form)
+
+
+class BlogUpdateView(UpdateView):
+    form_class = CreateBlog
+    model = Blog
+    template_name = 'blog/blog_create.html'
+
+    def get_success_url(self):
+        return reverse('create_blog:blog')
+
+
+
+# class ShopCreateView(LoginRequiredMixin,CreateView):
+#     form_class = ShopForm
+#     template_name = 'shop/shop_form.html'
+#     # fields = ['title', 'logo', 'email', 'phone', 'short_description', 'description', 'user', 'slug',]
+#
+#     def get_success_url(self):
+#         return reverse('shops:detail', args=(self.object.slug,))
+#
+#     def form_valid(self, form):
+#         form.instance.slug = slugify(form.instance.title)
+#         form.save(commit=False)
+#         form.save()
+#         form.instance.user.add(self.request.user)
+#         return super(ShopCreateView, self).form_valid(form)

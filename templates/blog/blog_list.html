@@ -7,6 +7,7 @@
     <span style="font-size: 50px; color:#2aabd2 ">Статьи</span>
         {% for blog in object_list %}
             <h1><a href="{% url 'get_blog' id=blog.id %}" >{{ blog.title }}</a></h1>
+            <a href="{% url 'blog_update' pk=blog.id %}">Редактировать</a><br>
             <i>{{ blog.date }}</i><br>
             <img src="{{ blog.image.url }}" style="height: 200px; width: 200px;">
             <p>{{ blog.preview }}</p>
